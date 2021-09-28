@@ -22,3 +22,4 @@ router.patch('/:contactId', async (req, res, next) => {
 })
 
 module.exports = router
+
