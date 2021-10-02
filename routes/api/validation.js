@@ -1,14 +1,12 @@
 const Joi = require('joi');
 
 const schemaContact = Joi.object({
-    "name": Joi.string().alphanum().min(1).max(15).required(),
-
-    "email": Joi.string().email({
-        minDomainSegments: 2, tlds: { allow: ['com', 'net']}
-      })
+    name: Joi.string().min(3).required(),
+    email: Joi.string().email().required(),
+    phone: Joi.string()
+      // eslint-disable-next-line prefer-regex-literals
+      .pattern(new RegExp('^.[0-9]{3}. [0-9]{3}-[0-9]{4}$'))
       .required(),
-
-    "phone": Joi.number().integer().min(3).max(20).required(),
 });
 
 
