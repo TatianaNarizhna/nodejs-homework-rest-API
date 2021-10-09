@@ -9,11 +9,15 @@ const schemaContact = Joi.object({
       // eslint-disable-next-line prefer-regex-literals
       .pattern(new RegExp('^.[0-9]{3}. [0-9]{3}-[0-9]{4}$'))
       .required(),
-      favorite: Joi.boolean().required()
+      favorite: Joi.boolean().optional(),
 });
 
 const schemeStatusContact = Joi.object({
-    favorite: Joi.boolean().required()
+    favorite: Joi.boolean().required(),
+})
+
+const schemaId = Joi.object({
+    contactId: Joi.string().required()
 })
 
 const validateContact = async (schema, obj, res, next) => {
@@ -49,6 +53,17 @@ const validateStatus = async (schema, obj, res, next) => {
     }
 };
 
+ const validateId = async (schema, obj, res, next) => {
+    try {
+        await schema.validateAsync(obj)
+        next()
+    } catch (error) {
+        res.status(400)
+        .json({ status: 'error', code: 400, 
+        message: `Field ${error.message.replace(/"/g, '')}` })
+    }
+};
+
 
 module.exports.validateContact = async (req, res, next) => {
    return await validateContact(schemaContact, req.body, res, next)
@@ -59,32 +74,9 @@ module.exports.validateContact = async (req, res, next) => {
  };
 
  module.exports.validateStatus = async (req, res, next) => {
-    return await validateStatus(schemeStatusContact, req.paramas, res, next)
+    return await validateStatus(schemeStatusContact, req.body, res, next)
  };
 
-
-
-
-
-
-
-//  const pattern = '\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}';
-
-// const schemaId = Joi.object({
-//     contactId: Joi.string().pattern(new RegExp(pattern)).required()
-// })
-
-//  const validateId = async (schema, obj, res, next) => {
-//     try {
-//         await schema.validateAsync(obj)
-//         next()
-//     } catch (error) {
-//         res.status(400)
-//         .json({ status: 'error', code: 400, 
-//         message: `Field ${error.message.replace(/"/g, '')}` })
-//     }
-// };
-
-//  module.exports.validateId = async (req, res, next) => {
-//     return await validateId(schemaId, req.params, res, next)
-//  };
+ module.exports.validateId = async (req, res, next) => {
+    return await validateId(schemaId, req.params, res, next)
+ };
