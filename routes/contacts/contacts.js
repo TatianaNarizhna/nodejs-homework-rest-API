@@ -8,7 +8,7 @@ const {
   updateContact,
   updateStatusContact 
 } = require('../../controllers/cotactsController');
-const { validateContact, validateBody, validateStatus, validateId } = require('./validation');
+const { validateContact, validateBody, validateStatus, validateId } = require('./validationContact');
 
 router.get('/', getContacts )
 

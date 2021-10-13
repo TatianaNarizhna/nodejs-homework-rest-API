@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { ValidInfoContact } = require('../../config/constant');
+const { ValidInfoContact } = require('../../config/constants');
 
 const schemaContact = Joi.object({
     name: Joi.string().min(ValidInfoContact.MIN_MANE)

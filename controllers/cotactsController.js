@@ -1,4 +1,4 @@
-const Contacts = require('../dataBase/index');
+const Contacts = require('../dataBase/contacts');
 
 const getContacts = async (req, res, next) => {
     try {
