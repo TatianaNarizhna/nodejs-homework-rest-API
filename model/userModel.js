@@ -55,7 +55,11 @@ userScheme.pre('save', async function (next) {
         this.password = await bcrypt.hash(this.password, salt);
     }
     next();
-})
+});
+
+userScheme.methods.isValidPassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+}
 
 const User = model('user', userScheme);
 

@@ -17,9 +17,12 @@
     "got": "^11.8.2",
     "joi": "^17.4.2",
     "joi-objectid": "^4.0.2",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.1.2",
     "mongoose": "^6.0.9",
-    "morgan": "1.10.0"
+    "morgan": "1.10.0",
+    "passport": "^0.5.0",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "eslint": "^7.19.0",
