@@ -9,18 +9,19 @@ const {
   updateStatusContact 
 } = require('../../controllers/cotactsController');
 const { validateContact, validateBody, validateStatus, validateId } = require('./validationContact');
+const guard = require('../../helpers/guard');
 
-router.get('/', getContacts )
+router.get('/', guard, getContacts )
 
-router.get('/:contactId', validateId, getContactById )
+router.get('/:contactId', guard, validateId, getContactById )
 
-router.post('/', validateContact, createContact )
+router.post('/', guard, validateContact, createContact )
 
-router.delete('/:contactId', validateId, deleteContact )
+router.delete('/:contactId', guard, validateId, deleteContact )
 
-router.put('/:contactId',  validateId, validateBody, updateContact )
+router.put('/:contactId', guard, validateId, validateBody, updateContact )
 
-router.patch('/:contactId/favorite/', validateId, validateStatus, updateStatusContact )
+router.patch('/:contactId/favorite/', guard, validateId, validateStatus, updateStatusContact )
 
 
 module.exports = router
