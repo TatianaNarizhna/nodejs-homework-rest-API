@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, SchemaTypes } = require('mongoose');
 const bcrypt = require('bcryptjs');
 const { Gender } = require('../config/constants');
 
@@ -6,11 +6,11 @@ const SALT_FACTOR = 6;
 
 const userScheme = new Schema ({
     name: {
-        type: String,
+        type: SchemaTypes.String,
         default: 'Guest',
     },
     email: {
-        type: String,
+        type: SchemaTypes.String,
         required: [true, 'Enter the email for contact'],
         unique: true,
         validate(value) {
@@ -19,11 +19,11 @@ const userScheme = new Schema ({
         }
     },
     password: {
-        type: String,
+        type: SchemaTypes.String,
         required: [true, 'Enter the password for contact'],
     },
     gender: {
-        type: String,
+        type: SchemaTypes.String,
         enum: {
             values: [Gender.MALE, Gender.FEMALE, Gender.NONE],
             message: 'This gender not allowed'
@@ -31,7 +31,7 @@ const userScheme = new Schema ({
         default: Gender.NONE,
     },
     token: {
-        type: String,
+        type: SchemaTypes.String,
         default: null,
     }
 },
