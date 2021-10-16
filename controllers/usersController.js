@@ -5,7 +5,7 @@ require('dotenv').config();
 const SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 const registration = async (req, res, next) => {
-    const { name, email, password, gender } = req.body;
+    const { name, email, password, subscription } = req.body;
     const user = await Users.findByEmail(email);
     if (user) {
         return res
@@ -17,7 +17,7 @@ const registration = async (req, res, next) => {
         })
     }
     try {
-        const newUser =  await Users.createNewUser({ name, email, password, gender })
+        const newUser =  await Users.createNewUser({ name, email, password, subscription })
         return res
         .status(HttpCode.CREATED)
         .json({
@@ -27,7 +27,7 @@ const registration = async (req, res, next) => {
                 id: newUser.id,
                 name: newUser.name,
                 email: newUser.email,
-                gender: newUser.gender,
+                subscription: newUser.subscription,
             },
         })
     } catch (error) {
@@ -45,13 +45,14 @@ const login = async (req, res, next) => {
         .json({
             status: 'error',
             code: HttpCode.UNAUTHORIZED,
-            message: 'Invalid credentials',
+            message: 'Email or password is wrong',
         })
     }
     const id = user._id;
     const payload = {id};
     const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
-    await Users.updateToken(id, token);
+    const subscription = user.subscription;
+    await Users.updateToken(id, token, email, subscription );
     return res
         .status(HttpCode.OK)
         .json({
@@ -59,12 +60,23 @@ const login = async (req, res, next) => {
             code: HttpCode.OK,
             date: {
                 token,
+                email,
+                subscription,
             }
         })
 };
 
 const logout = async (req, res, next) => {
     const id = req.user._id;
+    if (!id) {
+        return res
+        .status(HttpCode.UNAUTHORIZED)
+        .json({
+            status: 'error',
+            code: HttpCode.UNAUTHORIZED,
+            message: 'Not authorized',
+        })
+    }
     await Users.updateToken(id, null);
     return res.status(HttpCode.NO_CONTENT).json({});
 };

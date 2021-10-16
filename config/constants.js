@@ -1,12 +1,12 @@
-const ValidInfoContact = {
-    MIN_MANE: 3,
+const ValidInfoName = {
+    MIN_NAME: 3,
     MAX_NAME: 30
 };
 
-const Gender = {
-    MALE: 'male',
-    FEMALE: 'female',
-    NONE: 'none',
+const Subscript = {
+    STARTER: 'starter',
+    PRO: 'pro',
+    BUSINESS: 'business',
 }
 
 const HttpCode = {
@@ -19,11 +19,18 @@ const HttpCode = {
     FORBIDDEN: 403,
     NOT_FOUND: 404,
     CONFLICT: 409,
+    TOO_MANY_REQUESTS: 429,
     INTERNAL_SERVER_ERROR: 500,
+
+}
+
+const LimitJson = {
+    limit: 10000,
 }
 
 module.exports = {
-    ValidInfoContact,
-    Gender,
+    ValidInfoName,
+    Subscript,
     HttpCode,
+    LimitJson,
 };

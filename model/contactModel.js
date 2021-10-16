@@ -1,12 +1,11 @@
 const { Schema, model, SchemaTypes } = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate-v2');
-const { ValidInfoContact } = require('../config/constants');
+const { ValidInfoName } = require('../config/constants');
 
 const contactSchema = new Schema({
     name: {
         type: SchemaTypes.String,
-        min: ValidInfoContact.MIN_MANE,
-        max: ValidInfoContact.MAX_NAME,
+        min: ValidInfoName.MIN_NAME,
+        max: ValidInfoName.MAX_NAME,
         required: [true, 'Set a name for contact'],
     },
     email: {
@@ -37,7 +36,6 @@ const contactSchema = new Schema({
     toObject: { virtuals: true }
 });
 
-contactSchema.plugin(mongoosePaginate);
 
 const Contact = model('contact', contactSchema);
 
