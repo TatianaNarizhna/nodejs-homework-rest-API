@@ -1,9 +1,9 @@
 const Joi = require('joi');
-const { ValidInfoContact } = require('../../config/constant');
+const { ValidInfoName } = require('../../config/constants');
 
 const schemaContact = Joi.object({
-    name: Joi.string().min(ValidInfoContact.MIN_MANE)
-      .max(ValidInfoContact.MAX_NAME).required(),
+    name: Joi.string().min(ValidInfoName.MIN_NAME)
+      .max(ValidInfoName.MAX_NAME).required(),
     email: Joi.string().email().required(),
     phone: Joi.string()
       // eslint-disable-next-line prefer-regex-literals

@@ -1,25 +1,29 @@
-const { Schema, model } = require('mongoose');
-const { ValidInfoContact } = require('../config/constant');
+const { Schema, model, SchemaTypes } = require('mongoose');
+const { ValidInfoName } = require('../config/constants');
 
 const contactSchema = new Schema({
     name: {
-        type: String,
-        min: ValidInfoContact.MIN_MANE,
-        max: ValidInfoContact.MAX_NAME,
+        type: SchemaTypes.String,
+        min: ValidInfoName.MIN_NAME,
+        max: ValidInfoName.MAX_NAME,
         required: [true, 'Set a name for contact'],
     },
     email: {
-        type: String,
+        type: SchemaTypes.String,
         required: [true, 'Set an email for contact'],
     },
     phone: {
-        type: String,
+        type: SchemaTypes.String,
         required: [true, 'Set a phone for contact'],
     },
     favorite: {
-        type: Boolean,
+        type: SchemaTypes.Boolean,
         default: false,
-    }
+    },
+    owner: {
+        type: SchemaTypes.ObjectId,
+        ref: 'user',
+      }
 }, {
     versionKey: false, 
     timestamps: true, 
@@ -31,6 +35,7 @@ const contactSchema = new Schema({
     },
     toObject: { virtuals: true }
 });
+
 
 const Contact = model('contact', contactSchema);
 
