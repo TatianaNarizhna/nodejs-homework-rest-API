@@ -1,5 +1,6 @@
 const { Schema, model, SchemaTypes } = require('mongoose');
 const bcrypt = require('bcryptjs');
+const gravatar = require('gravatar');
 const { Subscript } = require('../config/constants');
 
 const SALT_FACTOR = 6;
@@ -33,6 +34,14 @@ const userScheme = new Schema ({
     token: {
         type: SchemaTypes.String,
         default: null,
+    },
+    avatar: {
+        type: SchemaTypes.String,
+        default: function () {
+            return gravatar.url(this.email, 
+            { s: '250' }, 
+            true);
+        }
     }
 },
 {
