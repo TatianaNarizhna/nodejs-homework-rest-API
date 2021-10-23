@@ -42,7 +42,7 @@ const registration = async (req, res, next) => {
 const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await Users.findByEmail(email);
-    const isValidPassword = await user.isValidPassword(password);
+    const isValidPassword = await user?.isValidPassword(password);
     if (!user || !isValidPassword) {
         return res
         .status(HttpCode.UNAUTHORIZED)
@@ -54,7 +54,7 @@ const login = async (req, res, next) => {
     }
     const id = user._id;
     const payload = {id};
-    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '1h' });
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '3h' });
     const subscription = user.subscription;
     await Users.updateToken(id, token, email, subscription );
     return res
@@ -110,12 +110,11 @@ const uploadAvatar = async (req, res, next) => {
     const avatarUrl = await uploadAvatar.save(file, id);
     await Users.updateAvatar(id, avatarUrl);
   
-
     return res.status(HttpCode.OK).json({ 
         status: 'success',
         code: HttpCode.OK,
         date: {
-           avatar: avatarUrl,
+            avatarURL : avatarUrl,
         }
     });
 };

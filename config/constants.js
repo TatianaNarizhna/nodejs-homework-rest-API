@@ -28,9 +28,15 @@ const LimitJson = {
     limit: 10000,
 }
 
+const FieldSize = {
+    limit: 2000000,
+}
+
 module.exports = {
     ValidInfoName,
     Subscript,
     HttpCode,
     LimitJson,
+    FieldSize,
 };
+
