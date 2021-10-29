@@ -52,7 +52,7 @@ const userScheme = new Schema ({
         type: SchemaTypes.String,
         required: [true, 'Verify token is required'],
         default: crypto.randomUUID(),
-    }
+    },
 },
 {
     versionKey: false, 
