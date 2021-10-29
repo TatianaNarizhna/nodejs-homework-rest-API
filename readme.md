@@ -32,3 +32,7 @@
 
 
 <!-- mongodb+srv://goit-HW:maska3333@clusterhw3.trbop.mongodb.net/db-contacts -->
+<!-- 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 -->
+
+<!-- token -->
+<!-- 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 -->

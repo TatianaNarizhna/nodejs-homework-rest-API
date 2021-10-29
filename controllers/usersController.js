@@ -20,6 +20,7 @@ const registration = async (req, res, next) => {
         })
     }
     try {
+        // TODO: verify user
         const newUser =  await Users.createNewUser({ name, email, password, subscription })
         return res
         .status(HttpCode.CREATED)
@@ -43,7 +44,7 @@ const login = async (req, res, next) => {
     const { email, password } = req.body;
     const user = await Users.findByEmail(email);
     const isValidPassword = await user?.isValidPassword(password);
-    if (!user || !isValidPassword) {
+    if (!user || !isValidPassword || !user?.verify) {
         return res
         .status(HttpCode.UNAUTHORIZED)
         .json({
