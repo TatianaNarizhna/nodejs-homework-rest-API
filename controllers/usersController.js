@@ -144,7 +144,7 @@ const verifyUser = async (req, res, next) => {
              status: 'success',
              code: HttpCode.OK,
              date: {
-               message: 'Verification email sent'
+               message: 'Verification successful'
              }
            })
         }
@@ -152,8 +152,8 @@ const verifyUser = async (req, res, next) => {
         .status(HttpCode.BAD_REQUEST)
         .json({
             status: 'error',
-            code: HttpCode.BAD_REQUEST,
-            message: 'Invalid token',
+            code: HttpCode.NOT_FOUND,
+            message: 'User not found',
         })
 }
 
@@ -169,6 +169,17 @@ const repeatEmailForverifyUser = async (req, res, next) => {
         name, 
         verifyToken,
         )
+     }
+     if ( !email ) {
+         return res
+         .status(HttpCode.BAD_REQUEST)
+         .json({
+             status: 'error',
+             code: HttpCode.BAD_REQUEST,
+             date: {
+                 message: 'Missing required field email',
+             }
+         })
      }
        return res
       .status(HttpCode.OK)
