@@ -80,6 +80,8 @@ userScheme.methods.isValidPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 }
 
+console.log('hello')
+
 const User = model('user', userScheme);
 
 module.exports = User;
